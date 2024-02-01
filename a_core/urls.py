@@ -29,4 +29,4 @@ urlpatterns = [
     path('post/edit/<str:pk>/', post_edit_view, name='post-edit'),
     path('post/<str:pk>/', post_page_view, name='post'),
 ]
-# urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
