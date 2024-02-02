@@ -22,6 +22,7 @@ from a_posts.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path('', home_view, name='home'),
     path('category/<str:tag>/', home_view, name='category'),
     path('post/create/', post_create_view, name='post-create'),
