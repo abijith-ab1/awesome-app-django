@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from bs4 import BeautifulSoup
 import requests
@@ -23,7 +24,7 @@ def home_view(request, tag=None):
         'tag': tag
     }
     return render(request, 'a_posts/home.html', context)
-
+@login_required
 def post_create_view(request):
     form = PostCreateForm()
     if request.method == 'POST':
@@ -49,6 +50,8 @@ def post_create_view(request):
                 if find_artist:
                     artist = find_artist[0].text.strip()
                     post.artist = artist
+                
+                post.author = request.user
                     
                 post.save()
                 form.save_m2m()
@@ -58,17 +61,18 @@ def post_create_view(request):
                 print('Error:', e)
                 
     return render(request, 'a_posts/post_create.html', {'form': form})
-
+@login_required
 def post_delete_view(request, pk):
-    post = get_object_or_404(Post, id=pk)
+    post = get_object_or_404(Post, id=pk, author=request.user)
     if request.method == 'POST':
         post.delete()
         messages.success(request, "Post deleted successfully...")
         return redirect('/')
     return render(request, 'a_posts/post_delete.html', {'post': post})
 
+@login_required
 def post_edit_view(request, pk):
-    post = get_object_or_404(Post, id=pk)
+    post = get_object_or_404(Post, id=pk, author=request.user)
     form = PostEditForm(instance=post)
     
     if request.method == 'POST':
