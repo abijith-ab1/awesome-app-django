@@ -7,3 +7,5 @@ class TagModelAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Post)
 admin.site.register(Tag, TagModelAdmin)
+admin.site.register(Comment)
+admin.site.register(Reply)
