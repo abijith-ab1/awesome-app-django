@@ -30,7 +30,9 @@ urlpatterns = [
     path('post/delete/<str:pk>/', post_delete_view, name='post-delete'),
     path('post/edit/<str:pk>/', post_edit_view, name='post-edit'),
     path('post/<str:pk>/', post_page_view, name='post'),
-    path('post/<str:pk>/like/', like_post, name='like-post'),
+    path('post/like/<str:pk>/', like_post, name='like-post'),
+    path('comment/like/<str:pk>/', like_comment, name='like-comment'),
+    path('reply/like/<str:pk>/', like_reply, name='like-reply'),
     
     
     path('profile/', profile_view, name='profile'),
