@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'a_posts',
     'a_users',
+    
+    "django_htmx",
 ]
 SITE_ID = 1
 
@@ -59,6 +61,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
     "allauth.account.middleware.AccountMiddleware",
+    
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = 'a_core.urls'

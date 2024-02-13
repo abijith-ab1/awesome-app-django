@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.db.models import Count
 from django.contrib import messages
 from bs4 import BeautifulSoup
 import requests
@@ -95,7 +96,15 @@ def post_page_view(request, pk):
     post = get_object_or_404(Post, id=pk)
     commentform = CommentCreateForm()
     replyform = ReplyCreateForm()
-
+    
+    if request.htmx:
+        if 'top' in request.GET:
+            # comments = post.comments.filter(likes__isnull=False).distinct()
+            comments = post.comments.annotate(num_likes=Count('likes')).filter(num_likes__gt=0).order_by('-num_likes')
+        else:
+            comments = post.comments.all()
+        return render(request, 'snippets/loop_postpage_comment.html', {'comments': comments, 'replyform': replyform})
+    
     context = {
         'post': post,
         'commentform': commentform,
