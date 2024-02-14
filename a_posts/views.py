@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import requests
 import urllib.request
 from urllib.request import urlopen
+from django.core.paginator import Paginator
 
 from .models import *
 from .forms import *
@@ -18,10 +19,21 @@ def home_view(request, tag=None):
     else:
         posts = Post.objects.all()
     
+    paginator = Paginator(posts, 3)
+    page = int(request.GET.get('page', 1))
+    try:
+        posts = paginator.page(page)
+    except:
+        return HttpResponse('')
+    
     context = {
         'posts': posts,
-        'tag': tag
+        'tag': tag,
+        'page': page
     }
+    if request.htmx:
+        return render(request, 'snippets/loop_home_posts.html', context)
+    
     return render(request, 'a_posts/home.html', context)
 @login_required
 def post_create_view(request):
