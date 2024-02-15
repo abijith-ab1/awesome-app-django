@@ -7,7 +7,7 @@
         <div class="text-center flex flex-col items-center">
             {% for participant in conversation.participants.all %}
             {% if participant != request.user %}
-            <a href="{% url 'userprofile' participant.username %}}">
+            <a href="{% url 'userprofile' participant.username %}">
                 <img class="w-24 h-24 rounded-full object-cover mb-4" src="{{ participant.profile.avatar }}" alt="">
             </a>
             <div class="text-center max-w-md">
