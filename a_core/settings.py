@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'a_posts',
     'a_users',
+    'a_inbox',
     
     "django_htmx",
 ]
+
 SITE_ID = 1
 
 MIDDLEWARE = [
@@ -157,5 +159,5 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 
 ACCOUNT_USERNAME_BLACKLIST = [
-    'admin', 'accounts', 'profile', 'category', 'post'
+    'admin', 'accounts', 'profile', 'category', 'post', 'inbox'
 ]

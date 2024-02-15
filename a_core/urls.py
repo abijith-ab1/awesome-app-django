@@ -33,7 +33,7 @@ urlpatterns = [
     path('post/like/<str:pk>/', like_post, name='like-post'),
     path('comment/like/<str:pk>/', like_comment, name='like-comment'),
     path('reply/like/<str:pk>/', like_reply, name='like-reply'),
-    
+    path('inbox/', include('a_inbox.urls')),
     
     path('profile/', profile_view, name='profile'),
     path('<username>/', profile_view, name='userprofile'),
