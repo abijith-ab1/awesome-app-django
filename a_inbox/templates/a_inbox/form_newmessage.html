@@ -1,7 +1,7 @@
 <div class="flex gap-2 items-center mb-5">
     <span class="font-bold">To:</span>
     <div class="flex items-center gap-1">
-        <img class="w-10 h-10 object-cover rounded-full mr-1" src="{{ recipient.profile.avatar}}" alt="">
+        <img class="w-10 h-10 object-cover rounded-full mr-1" src="{{ recipient.profile.avatar }}" alt="">
         <div class="font-bold">{{ recipient.profile.name }}
             <span class="text-xs font-normal text-zinc-500">@{{ recipient.username }}</span>
         </div>
@@ -12,7 +12,7 @@
     <form action="{% url 'inbox-newmessage' recipient.id %}" method="POST">
         {% csrf_token %}
         {{ new_message_form }}
-        <button class="mt-1" type="submit">Submitt Message</button>
+        <button class="mt-1" type="submit">Submit Message</button>
         <a @click="modal_open = false" href="{{ request.META.HTTP_REFERER }}" class="button secondaryAction ml-1"
         _="on click reset() the closest <form/>">Cancel</a>
     </form>

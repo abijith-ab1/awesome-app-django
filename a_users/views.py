@@ -34,10 +34,11 @@ def profile_view(request, username=None):
         return render(request, 'snippets/loop_profile_posts.html', {'posts': posts})
     
     new_message_form = InboxNewMessageForm()
+    
     context = {
         'profile': profile,
         'posts': posts,
-        'new_message_form': new_message_form,
+        'new_message_form': new_message_form
     }
     return render(request, 'a_users/profile.html', context)
 @login_required
