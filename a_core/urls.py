@@ -22,7 +22,8 @@ from a_posts.views import *
 from a_users.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('the_ab_boss/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', home_view, name='home'),
     path('category/<str:tag>/', home_view, name='category'),

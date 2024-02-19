@@ -2,10 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.db.models import Q
+from cryptography.fernet import Fernet
+from django.conf import settings
+
 
 from .models import *
 from a_users.models import Profile
 from .forms import *
+
+f = Fernet(settings.ENCRYPT_KEY)
 
 # Create your views here.
 @login_required
@@ -53,6 +58,14 @@ def new_message(request, recipient_id):
         form = InboxNewMessageForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
+            
+            # encrypt message
+            message_original = form.cleaned_data['body']
+            message_bytes = message_original.encode('utf-8')
+            message_encrypted = f.encrypt(message_bytes)
+            message_decoded = message_encrypted.decode('utf-8')
+            message.body = message_decoded
+            
             message.sender = request.user
             
             my_conversations = request.user.conversations.all()
@@ -87,6 +100,14 @@ def new_reply(request, conversation_id):
         form = InboxNewMessageForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
+            
+            # encrypt message
+            message_original = form.cleaned_data['body']
+            message_bytes = message_original.encode('utf-8')
+            message_encrypted = f.encrypt(message_bytes)
+            message_decoded = message_encrypted.decode('utf-8')
+            message.body = message_decoded
+            
             message.sender = request.user
             message.conversation = conversation
             message.save()
