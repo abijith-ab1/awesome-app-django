@@ -9,6 +9,7 @@ import urllib.request
 from urllib.request import urlopen
 from django.core.paginator import Paginator
 
+from a_features.views import feature_enabled
 from .models import *
 from .forms import *
 
@@ -25,11 +26,16 @@ def home_view(request, tag=None):
         posts = paginator.page(page)
     except:
         return HttpResponse('')
+    try:
+        feature_herobutton = feature_enabled(1, 'Abijith')
+    except:
+        feature_herobutton = False
     
     context = {
         'posts': posts,
         'tag': tag,
-        'page': page
+        'page': page,
+        'feature_herobutton': feature_herobutton
     }
     if request.htmx:
         return render(request, 'snippets/loop_home_posts.html', context)
